@@ -5,9 +5,25 @@
     <title>Product List</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
+<style>
+    .container{
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .list-actions {
+        display: flex;
+        align-items: center;
+    }
+    .list-actions button {
+        width: 80px;
+        height: 30px;
+        margin-right: 5px;
+    }
+</style>
 <body>
 
-<div class="container my-2">
+<div class="container">
     <h2>Product' List</h2>
     <a th:href="@{/product/create}" class="btn btn-primary btn-sm mb-3">Create Product</a>
 
@@ -16,7 +32,7 @@
         <tr>
             <th scope="col">Product Name</th>
             <th scope="col">Quantity</th>
-            <th scope="col">Action</th>
+            <th scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -24,7 +40,15 @@
             <td th:text="${product.productName}"></td>
             <td th:text="${product.productQuantity}"></td>
             <td>
-                <a th:href="@{/product/edit/{id}(id=${product.productId})}" class="btn btn-sm btn-warning">Edit</a>
+                <div class="list-actions">
+                    <form th:action="@{/product/delete/{id}(id=${product.productId})}" th:method="delete"
+                          onsubmit="return confirm('Are you sure you want to delete this product?');">
+                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    </form>
+                    <a th:href="@{/product/edit/{id}(id=${product.productId})}">
+                        <button type="button" class="btn btn-primary btn-sm">Edit</button>
+                    </a>
+                </div>
             </td>
         </tr>
         </tbody>

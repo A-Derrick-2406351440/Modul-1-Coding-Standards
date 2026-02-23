@@ -28,8 +28,8 @@ repositories {
 
 sonar {
     properties {
-        property("sonar.projectKey", "a-derrick-2406351440")
-        property("sonar.organization", "A-Derrick-2406351440")
+        property("sonar.projectKey", "A-Derrick-2406351440_Modul-1-Coding-Standards")
+        property("sonar.organization", "a-derrick-2406351440")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.coverage.jacoco.xmlReportPaths", "${project.layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml")
     }

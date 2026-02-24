@@ -79,8 +79,8 @@ class ProductRepositoryTest {
         productUpdate.setProductId(beforeProduct.getProductId());
         productRepository.update(productUpdate);
 
-        assertEquals(beforeProduct.getProductName(),"Nama Baru");
-        assertEquals(beforeProduct.getProductQuantity(),50);
+        assertEquals("Nama Baru",beforeProduct.getProductName());
+        assertEquals(50,beforeProduct.getProductQuantity());
 
     }
 
@@ -131,8 +131,8 @@ class ProductRepositoryTest {
         productUpdate.setProductId(beforeProduct.getProductId());
         productRepository.update(productUpdate);
 
-        assertEquals(beforeProduct.getProductName(),"Barang Pertama diedit");
-        assertEquals(beforeProduct.getProductQuantity(),50);
+        assertEquals("Barang Pertama diedit",beforeProduct.getProductName());
+        assertEquals(50,beforeProduct.getProductQuantity());
 
         assertTrue(productRepository.delete("eb558e9f-1c39-460e-8860-71af6af63bd6"));
 

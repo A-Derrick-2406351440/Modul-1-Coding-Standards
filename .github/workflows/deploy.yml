@@ -1,0 +1,30 @@
+name: Continuous Deployment (CD)
+
+on:
+  push:
+    branches:
+      - module-2-exercise
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Koyeb PaaS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Koyeb Deploy
+        env:
+          KOYEB_WEBHOOK_URL: ${{ secrets.KOYEB_WEBHOOK_URL }}
+        run: |
+          # Skenario Pull-based: Koyeb secara otomatis memonitor GitHub repo Anda.
+          # Skenario Push-based trigger: Menggunakan Webhook untuk memicu deploy setelah push.
+          if [ -z "$KOYEB_WEBHOOK_URL" ]; then
+            echo "KOYEB_WEBHOOK_URL tidak ditemukan di GitHub Secrets."
+            echo "Mengandalkan fitur Pull-based Auto-Deploy native dari Koyeb..."
+            echo "Koyeb akan otomatis menarik (pull) kode terbaru dan mem-build Dockerfile."
+          else
+            echo "KOYEB_WEBHOOK_URL ditemukan. Memicu Push-based deployment ke Koyeb..."
+            curl -X POST "$KOYEB_WEBHOOK_URL"
+          fi

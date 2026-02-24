@@ -30,10 +30,6 @@ class ProductControllerTest {
     @InjectMocks
     private ProductController controller;
 
-    @BeforeEach
-    void setUp() {
-    }
-
     @Test
     void testHomePage() {
         HomePageController controller = new HomePageController();

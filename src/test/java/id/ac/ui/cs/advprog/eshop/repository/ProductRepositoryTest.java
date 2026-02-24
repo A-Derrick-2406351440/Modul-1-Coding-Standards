@@ -154,4 +154,26 @@ class ProductRepositoryTest {
     void testDeleteBlankProductId() {
         assertFalse(productRepository.delete("   "));
     }
+
+
+    @Test
+    void testGetProductFound() {
+        Product product = new Product();
+        product.setProductId("id-123");
+        productRepository.create(product);
+
+        Product foundProduct = productRepository.get("id-123");
+        assertNotNull(foundProduct);
+        assertEquals("id-123", foundProduct.getProductId());
+    }
+
+    @Test
+    void testGetProductNotFound() {
+        Product product = new Product();
+        product.setProductId("id-123");
+        productRepository.create(product);
+
+        Product foundProduct = productRepository.get("id-tidak-ada");
+        assertNull(foundProduct);
+    }
 }

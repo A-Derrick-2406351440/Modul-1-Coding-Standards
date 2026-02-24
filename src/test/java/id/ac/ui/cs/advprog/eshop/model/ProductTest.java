@@ -29,4 +29,16 @@ public class ProductTest {
     void testGetProductQuantity(){
         assertEquals(100,this.product.getProductQuantity());
     }
+
+    @Test
+    void testSettersAndGetters() {
+        Product newProduct = new Product();
+        newProduct.setProductId("new-id");
+        newProduct.setProductName("Nama Baru");
+        newProduct.setProductQuantity(200);
+
+        assertEquals("new-id", newProduct.getProductId());
+        assertEquals("Nama Baru", newProduct.getProductName());
+        assertEquals(200, newProduct.getProductQuantity());
+    }
 }

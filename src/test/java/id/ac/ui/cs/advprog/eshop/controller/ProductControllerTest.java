@@ -32,8 +32,8 @@ class ProductControllerTest {
 
     @Test
     void testHomePage() {
-        HomePageController controller = new HomePageController();
-        String viewName = controller.HomePage();
+        HomePageController control = new HomePageController();
+        String viewName = control.HomePage();
         assertEquals("HomePage", viewName);
     }
 

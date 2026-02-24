@@ -18,8 +18,6 @@ jobs:
         env:
           KOYEB_WEBHOOK_URL: ${{ secrets.KOYEB_WEBHOOK_URL }}
         run: |
-          # Skenario Pull-based: Koyeb secara otomatis memonitor GitHub repo Anda.
-          # Skenario Push-based trigger: Menggunakan Webhook untuk memicu deploy setelah push.
           if [ -z "$KOYEB_WEBHOOK_URL" ]; then
             echo "KOYEB_WEBHOOK_URL tidak ditemukan di GitHub Secrets."
             echo "Mengandalkan fitur Pull-based Auto-Deploy native dari Koyeb..."

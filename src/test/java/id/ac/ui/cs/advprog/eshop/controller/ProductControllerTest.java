@@ -66,7 +66,7 @@ class ProductControllerTest {
         Product product = new Product();
         when(service.get("test-id")).thenReturn(product);
 
-        String viewName = controller.editProductPage("test-id", model);
+        String viewName = controller.editProductPage(model, "test-id");
         assertEquals("EditProduct", viewName);
         verify(model).addAttribute("product", product);
     }

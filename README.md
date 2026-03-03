@@ -30,3 +30,32 @@
 - Ketika saya mengerjakan tugas ini, saya mendapatkan code quality issue. Pertama, penggunaan method yang tidak ada isinya di ProductRepository.java yang saya fix dengan menghapus methodnya. Kedua, rename method Homepage menjadi homePage di HomepageController.java. Ketiga, mengganti variabel lokal di method testHomePage dari controller menjadi controll agar nama variabelnya tidak bertabrakan dengan variabel global yang sudah di set di InjectMocks. Keempat, menghilangkan public modifier yang ada di ProductTeset.java agar kodenya menjadi compliant. Kelima, mengganti posisi jawaban testcase antara dari actual,expected menjadi expected,actual agar sesuai dengan penggunaan assertEquals
 - Saya juga menambahkan berbagai test case baru agar semua coveragenya 100%
 - Menurut saya implementasi CI/CD workflow saya sudah mengikuti definisi Continuous Integration and Continuous Deployment. Code saya akan melalui proses yang berkelanjutan sesuai definisi CI/CD. Kode ini akan secara otomatis secara Continuous Integration menggunakan Github Actions. Kode akan dilakukan pengecekan dan analisis secara otomotasi menggunakan Scorecard dan Sonarcloud. Untuk Continuous Deployment sendiri saya sudah menggunakan koyeb sebagai PaaS untuk CD nya. Jadi untuk setiap perubahan akan dilakukan proses ini. Oleh karena itu, saya merasa kode saya sudah menerapkan implementasi CI/CD workflow.
+
+## Module 3
+- Explain what principles you apply to your project!
+    - S (Single Responsibility Principle)
+        - Pertama, pada bagian `ProductController` awalnya saya meletakkan bagian `HomePage()` pada `ProductController`. Ini tidak menerapkan SRP karena `HomePage` seharusnya memiliki tanggung jawab tersendiri untuk halaman home yang berbeda fungsionalitas . Oleh karena itu saya membuat class baru `HomeController`
+        - Kedua, pada bagian `ProductController` terdapat class `CarController` yang extends `ProductController`.`CarController` seharusnya dipisah menjadi bagian tersendiri karena `CarController` seharusnya memiliki tanggung jawab tersendiri untuk halaman car yang berbeda fungsionalitas.
+
+    - O (Open-Closed Principle)
+        - Penerapan OCP terlihat pada penggunaan interface `CarService` di dalam `CarController`. Dengan menghubungkan controller ke interface, kode saya menjadi "Open for Extension" namun "Closed for Modification". Artinya, jika di masa depan saya ingin mengubah cara penyimpanan data mobil, saya cukup membuat class implementasi baru, misalnya `CarServiceDatabase` tanpa perlu mengubah satu baris kode pun di `CarController`.
+
+    - L (Liskov Substitution Principle)
+        - Pada code saya, awalnya `CarController` merupakan subclass `ProductController`. Namun, kedua hal ini berbeda fungsi dan `CarController` tidak dapat menggantikan `ProductController`. Oleh karena itu, saya pisah menjadi dua class yang berbeda.
+
+    - I (Interface segregation Principle)
+        - Dengan memisahkan implementasi `CarService` dan `ProductService`, kita dapat memenuhi prinsip ini, yang mana setiap interface memenuhi tanggung jawab nya masing-masing sesuai klien tertentu.
+
+    - D (Dependency Inversions Principle)
+        - Pada bagian `CarController` terdapat `private CarServiceImpl carService`. Berdasarkan prinsip DIP seharusnya saya bergantung pada level sebuah interface atau fungsi abstrak dibandingkan level class atau function yang concrete. Oleh karena itu, saya ubah menjadi `private CarService carService` yang bergantung pada interface.
+
+-  Explain the advantages of applying SOLID principles to your project with examples.
+    - Kode saya menjadi lebih terstruktur. Contohnya dengan SRP, jika saya perlu mengubah logika validasi pembuatan mobil, saya tahu persis saya hanya perlu membuka `CarController` atau `CarService` tanpa takut merusak fitur `Product` atau `HomePage`.
+    - Prinsip DIP dan SRP membuat Unit Test jauh lebih mudah dibuat. Karena `CarController` sekarang bergantung pada interface `CarService`, saya bisa dengan mudah membuat Mock Object untuk `CarService` saat testing, tanpa perlu memikirkan implementasi database atau logika bisnis yang rumit di `CarServiceImpl`. 
+    - Kode lebih mudah dipahami oleh orang lain karena class yang kecil dengan nama yang deskriptif seperti `CarController` yang hanya mengurus mobil sehingga jauh lebih mudah dibaca daripada satu `ProductController` yang mengurus semua hal. 
+    - Menambah fitur baru menjadi lebih aman. Jika nanti ada fitur `Motorcycle`, saya bisa membuatnya tanpa mengganggu kode `Car` atau `Product` yang sudah berjalan stabil.
+
+-  Explain the disadvantages of not applying SOLID principles to your project with examples.
+    - Apabila tidak menerapkan prinsip solid, code kita akan lebih susah untuk dijaga karena code sangat complex dan susah dipahami. Contohnya, ketika kita tidak menerapkan SRP, maka kita akan kebingungan terkait fungsi code tersebut karena adanya hubungan dengan method lain.
+    - Code kita akan lebih susah diuji karena tiap fungsionalitas tidak independen yang menyebabkan proses pencarian bug akan sulit karena banyaknya bagian yang terlibat. Contohnya, kita ingin test suatu fungsi di `CarController`. Namun dengan bergantungnya pada fungsi lain kita akan kebingungan mencari bagian mana yang menyebabkan bug.
+    - Penambahan fitur baru akan lebih sulit karena ada kemungkinan kita dapat memunculkan bug baru yang disebabkan bagian lain. Hal ini tentunya akan menjadi kesulitan saat ingin menelusuri bagian yang mana menyebabkan fitur tidak berjalan. 
